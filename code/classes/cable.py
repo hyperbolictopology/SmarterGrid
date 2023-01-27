@@ -3,31 +3,29 @@ class Cable():
     This class defines cables properties.
     '''
     def __init__(self):
-        self.cable_segments = [] # Example: [ ((1,1), (1,2)), ((1,2), (1,3)) ]
+        self.cable_segments = {} # Example: { 1: ((1,1), (1,2)), 2: ((1,2), (1,3)) }
         self.price = 9
-        # TODO net zoals bij huis en batterij hier ook een kleur toe te wijzen.
-        # Tip van wouter was om batterijen verschillende kleuren te geven en de
-        # kabels daarbij te matchen voor beter overzicht (begreep ik dat goed?)
 
-    # A segment consists out of two adjacent points in the grid (start and end)
-    def add_cable_segment(self, start, end):
-        self.cable_segments.append((start, end))
 
-    # Start clean
+    # A segment consists out of two adjacent points in the grid (start and end) and has a unique id
+    def add_cable_segment(self, start, end, id):
+        self.cable_segments[id] = (start, end)
+
+    # Starts clean
     def clear_segments(self):
-        self.cable_segments = []
+        self.cable_segments = {}
 
-    # Get a list from the segment list of the coordinates of the cable routes for the plot
+    # Gets a list from the segment list of the coordinates of the cable routes for the plot
     def get_route_list(self):
 
-        # Adding the first coordinate from the segment for every segment in the list
+        # Adds the first coordinate from the segment for every segment in the list
         cable_plot_list = [self.cable_segments[i][0] for i in range(len(self.cable_segments))]
 
-        # Add last segment (the battery location)
+        # Adds last segment (the battery location)
         cable_plot_list.append(self.cable_segments[-1][-1])
         return cable_plot_list
 
-    # Get a list of the coordinates of the cable routes for the json output
+    # Gets a list of the coordinates of the cable routes for the json output
     def get_route_list_string(self):
         new_list = []
 
